@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
@@ -16,20 +17,19 @@ import androidx.compose.ui.unit.dp
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent { TipCalculator_Step5() }
+        setContent { TipCalculator_Step6() }
     }
 }
 
 @Composable
-fun TipCalculator_Step5() {
+fun TipCalculator_Step6() {
     MaterialTheme {
         Surface(Modifier.fillMaxSize()) {
-            var amount by remember { mutableStateOf("") }
-            var dishes by remember { mutableStateOf("") }
-            var tip by remember { mutableStateOf(0f) }
-            var selectedDiscount by remember { mutableStateOf(0) }
+            var amount by rememberSaveable { mutableStateOf("") }
+            var dishes by rememberSaveable { mutableStateOf("") }
+            var tip by rememberSaveable { mutableStateOf(0f) }
+            var selectedDiscount by rememberSaveable { mutableStateOf(0) }
 
-            // авто-выбор скидки по числу блюд
             LaunchedEffect(dishes) {
                 val n = dishes.toIntOrNull() ?: 0
                 selectedDiscount = when {
@@ -93,4 +93,4 @@ fun TipCalculator_Step5() {
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun Preview_Step5() { TipCalculator_Step5() }
+fun Preview_Step6() { TipCalculator_Step6() }
