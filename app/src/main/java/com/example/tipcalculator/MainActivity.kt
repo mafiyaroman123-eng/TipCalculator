@@ -16,17 +16,18 @@ import androidx.compose.ui.unit.dp
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent { TipCalculator_Step3() }
+        setContent { TipCalculator_Step4() }
     }
 }
 
 @Composable
-fun TipCalculator_Step3() {
+fun TipCalculator_Step4() {
     MaterialTheme {
         Surface(Modifier.fillMaxSize()) {
             var amount by remember { mutableStateOf("") }
             var dishes by remember { mutableStateOf("") }
-            var tip by remember { mutableStateOf(0f) }  // 0..25
+            var tip by remember { mutableStateOf(0f) }
+            var selectedDiscount by remember { mutableStateOf(0) } // 0/3/5/7/10
 
             Column(Modifier.padding(16.dp)) {
                 Text("Сумма заказа:")
@@ -62,6 +63,17 @@ fun TipCalculator_Step3() {
                     )
                     Text("25")
                 }
+
+                Spacer(Modifier.height(16.dp))
+                Text("Скидка:")
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    listOf(3, 5, 7, 10).forEach { perc ->
+                        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(end = 16.dp)) {
+                            RadioButton(selected = selectedDiscount == perc, onClick = {}, enabled = false)
+                            Text("$perc%")
+                        }
+                    }
+                }
             }
         }
     }
@@ -69,4 +81,4 @@ fun TipCalculator_Step3() {
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun Preview_Step3() { TipCalculator_Step3() }
+fun Preview_Step4() { TipCalculator_Step4() }
