@@ -17,17 +17,19 @@ import androidx.compose.ui.unit.dp
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent { TipCalculator_Step6() }
+        setContent { TipCalculator_Final() }
     }
 }
 
 @Composable
-fun TipCalculator_Step6() {
+fun TipCalculator_Final() {
     MaterialTheme {
         Surface(Modifier.fillMaxSize()) {
+            val discountOptions = listOf(3, 5, 7, 10)
+
             var amount by rememberSaveable { mutableStateOf("") }
             var dishes by rememberSaveable { mutableStateOf("") }
-            var tip by rememberSaveable { mutableStateOf(0f) }
+            var tip by rememberSaveable { mutableStateOf(0f) }  // 0..25
             var selectedDiscount by rememberSaveable { mutableStateOf(0) }
 
             LaunchedEffect(dishes) {
@@ -79,13 +81,22 @@ fun TipCalculator_Step6() {
                 Spacer(Modifier.height(16.dp))
                 Text("Скидка:")
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    listOf(3, 5, 7, 10).forEach { perc ->
-                        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(end = 16.dp)) {
-                            RadioButton(selected = selectedDiscount == perc, onClick = {}, enabled = false)
+                    discountOptions.forEach { perc ->
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            modifier = Modifier.padding(end = 16.dp)
+                        ) {
+                            RadioButton(
+                                selected = selectedDiscount == perc,
+                                onClick = {},       // пользователь не меняет вручную
+                                enabled = false
+                            )
                             Text("$perc%")
                         }
                     }
                 }
+
+                Spacer(Modifier.height(12.dp))
             }
         }
     }
@@ -93,4 +104,4 @@ fun TipCalculator_Step6() {
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun Preview_Step6() { TipCalculator_Step6() }
+fun Preview_Final() { TipCalculator_Final() }
