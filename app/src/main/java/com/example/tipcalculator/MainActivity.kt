@@ -16,18 +16,30 @@ import androidx.compose.ui.unit.dp
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent { TipCalculator_Step4() }
+        setContent { TipCalculator_Step5() }
     }
 }
 
 @Composable
-fun TipCalculator_Step4() {
+fun TipCalculator_Step5() {
     MaterialTheme {
         Surface(Modifier.fillMaxSize()) {
             var amount by remember { mutableStateOf("") }
             var dishes by remember { mutableStateOf("") }
             var tip by remember { mutableStateOf(0f) }
-            var selectedDiscount by remember { mutableStateOf(0) } // 0/3/5/7/10
+            var selectedDiscount by remember { mutableStateOf(0) }
+
+            // авто-выбор скидки по числу блюд
+            LaunchedEffect(dishes) {
+                val n = dishes.toIntOrNull() ?: 0
+                selectedDiscount = when {
+                    n in 1..2  -> 3
+                    n in 3..5  -> 5
+                    n in 6..10 -> 7
+                    n > 10     -> 10
+                    else       -> 0
+                }
+            }
 
             Column(Modifier.padding(16.dp)) {
                 Text("Сумма заказа:")
@@ -81,4 +93,4 @@ fun TipCalculator_Step4() {
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun Preview_Step4() { TipCalculator_Step4() }
+fun Preview_Step5() { TipCalculator_Step5() }
